@@ -1,0 +1,42 @@
+# This shiny app is based on the LifeCycleSavings datase from the
+# datasets package.
+# 
+# This app enables a user to choose which independent variable(s) 
+# to include in a model that predicts the aggregate personal savings
+# divided by disposable income ('sr') for 50 countries.
+
+# Load the required libraries
+library(shiny)
+library(datasets)
+library(Metrics)
+
+# Define UI for application that draws a histogram
+shinyUI(fluidPage(
+  
+  # Application title
+  titlePanel("Life Cycle Savings"),
+  
+  # Sidebar with checkbox inputs for the variables to use 
+  sidebarLayout(
+    h4("Independent variables to use"),
+    sidebarPanel(
+      checkboxInput("population15", "Population under the age of 15 (%)", value = TRUE),
+      checkboxInput("population75", "Population over the age of 75 (%)", value = TRUE),
+      checkboxInput("dispInc", "Real per-capita disposable income", value = TRUE),
+      checkboxInput("ddispInc", "Growth rate of dpi", value = TRUE)
+      
+    ),
+    
+    # Show a plot of the actual and predicted values
+    mainPanel(
+      
+      plotOutput("savePlot"),
+       
+       h6("Red dots represent actual values, while blue dots represent
+          values predicted by the selected independent variables"),
+      
+      h6("The root mean squared error is:"),
+      textOutput("rmse")
+    )
+  )
+))
